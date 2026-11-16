@@ -1,14 +1,21 @@
 package com.dashboard.backend.widget;
 
-import jakarta.persistence.*;
-import lombok.*;
+import java.time.LocalDateTime;
+import java.util.Map;
 
-import java.time.LocalDate;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
-import java.time.LocalDateTime;
-import java.util.Map;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "widgets")
@@ -43,8 +50,7 @@ public class Widget {
     private Integer h = 1;
 
     @Column(name = "view_mode", length = 32)
-    @Builder.Default
-    private String viewMode = "normal";
+    private String viewMode;
 
     @Column(name = "mode", length = 30)
     private String mode;
@@ -70,7 +76,10 @@ public class Widget {
         if (this.h == null) {
             this.h = 1;
         }
-        if (this.viewMode == null || this.viewMode.isBlank()) {
+        // if (this.viewMode == null || this.viewMode.isBlank()) {
+        // this.viewMode = "normal";
+        // }
+        if ("memo".equals(this.type) && (this.viewMode == null || this.viewMode.isBlank())) {
             this.viewMode = "normal";
         }
     }

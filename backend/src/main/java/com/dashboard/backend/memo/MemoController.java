@@ -69,7 +69,7 @@ public class MemoController {
 
     @PostMapping()
     public ResponseEntity<?> createMemo(@RequestBody MemoRequestDto request) {
-        // TODO: process POST request
+
         try {
 
             Memo created = memoService.creatMemo(request);
@@ -91,7 +91,6 @@ public class MemoController {
 
     @PutMapping("/{id}")
     public ResponseEntity<?> updateMemo(@PathVariable String id, @RequestBody MemoRequestDto request) {
-        // TODO: process PUT request
 
         try {
 
