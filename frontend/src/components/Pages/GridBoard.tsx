@@ -320,10 +320,17 @@ export const GridBoard = ({
   }; //end resize
 
   const handleDelete = async (id: string) => {
-    await widgetApi.deleteWidget(id);
-    setWidgets((prevWidgets: Widget[]) =>
-      prevWidgets.filter((w) => String(w.id) !== String(id)),
+    //낙관적업데이트 수정
+    const prevWidgets = widgets;
+    setWidgets((prev: Widget[]) =>
+      prev.filter((w) => String(w.id) !== String(id)),
     );
+    try {
+      await widgetApi.deleteWidget(id);
+    } catch (error) {
+      //실패 시 복구
+      setWidgets(prevWidgets);
+    }
   };
   return (
     <div
